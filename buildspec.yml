@@ -1,0 +1,47 @@
+version: 0.2
+
+env:
+  variables:
+    BLOG_CONF_DIR: "my-blog-config"
+    BLOG_CONF_REPO: "aweimeow/my-blog-config.git"
+    SUBMODULE_URL: "https://github.com/aweimeow/hexo-theme-icarus/archive/weiyu.dev.zip"
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+    runtime-versions:
+      nodejs: 10
+  pre_build:
+    commands:
+      - git clone https://$GITHUB_OAUTH_KEY@github.com/$BLOG_CONF_REPO
+      - curl -s -L $SUBMODULE_URL -o icarus.zip
+      - unzip -qq icarus.zip -d /tmp
+      - mv /tmp/hexo-theme-icarus-weiyu.dev/* themes/icarus/
+      - npm install hexo-cli -g
+      - npm install hexo --save
+      - npm install --force
+  build:
+    commands:
+      - echo "Build started on `date`, triggered by $CODEBUILD_WEBHOOK_TRIGGER"
+      - cp $BLOG_CONF_DIR/hexo/* .
+      - cp $BLOG_CONF_DIR/theme/icarus/* themes/icarus/
+      - ls -al .
+      - ls -al themes/icarus/
+      - hexo generate
+      - ls -alR public
+  post_build:
+    commands:
+      - echo "Build completed on `date`"
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: public
+  secondary-artifacts:
+    artifact1:
+      files:
+        - '**/*'
+      base-directory: public
+      discard-paths: no
