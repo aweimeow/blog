@@ -83,4 +83,4 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 <hr>
 
-下一篇：以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2
+下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2 （CodeBuild BuildSpec 篇）](/aws-codepipeline-build-cicd-blog-2/)
