@@ -15,21 +15,18 @@ phases:
   pre_build:
     commands:
       - git clone https://$GITHUB_OAUTH_KEY@github.com/$BLOG_CONF_REPO
-      - curl -s -L $SUBMODULE_URL -o icarus.zip
-      - unzip -qq icarus.zip -d /tmp
+      - curl -s -L $SUBMODULE_URL -o icarus.zip && unzip -qq icarus.zip -d /tmp
       - mv /tmp/hexo-theme-icarus-weiyu.dev/* themes/icarus/
       - npm install hexo-cli -g
       - npm install hexo --save
+      - npm install hexo-generator-feed --save
       - npm install --force
   build:
     commands:
       - echo "Build started on `date`, triggered by $CODEBUILD_WEBHOOK_TRIGGER"
       - cp $BLOG_CONF_DIR/hexo/* .
       - cp $BLOG_CONF_DIR/theme/icarus/* themes/icarus/
-      - ls -al .
-      - ls -al themes/icarus/
       - hexo generate
-      - ls -alR public
   post_build:
     commands:
       - echo "Build completed on `date`"
