@@ -184,4 +184,4 @@ artifacts:
 
 到了現在，想必已經大概瞭解如何去撰寫 buildspec 了，在下一個章節，我們會說明如何搭配 CloudFront 與 Lambda 服務，使自己的網站更完整。
 
-下一篇：以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 3 （CloudFront 與 Lambda 篇）
+下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 3 （CloudFront 與 Lambda 篇）](/aws-codepipeline-build-cicd-blog-3/)

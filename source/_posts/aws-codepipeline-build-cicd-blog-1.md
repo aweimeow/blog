@@ -37,7 +37,11 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 在此之前，你需要先建立兩個 S3 Bucket，一個作為建置時放置程式碼和建置 logs 用，另一個 bucket 的用途則是存放輸出檔案並建立靜態網站，建立 bucket 的過程不再贅述，應該可以找得到很多相關資源。至於這兩個 buckets 的名稱，我將它們命名為 `aweimeow-blog-build` 與 `aweimeow-blog-public`，讓接下來更容易辨識。
 
 {% colorquote success %}
-為了使輸出結果可以被公開存取到，我們必須在 `aweimeow-blog-public` 的 Access Policy 寫上以下內容：
+為了使輸出結果可以被公開存取到，我們必須調整 `aweimeow-blog-public` 的公開存取設定，讓他們不會把新的 Access Policy 封鎖。
+
+![作為靜態網站 Bucket 的公開存取設定](https://i.imgur.com/HxyZxdb.png)
+
+並且在它的 Access Policy 寫上以下內容：
 
 ```json
 {
@@ -77,10 +81,30 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 ### 設定 CodePipeline 的部署階段
 
-在最後，我們要設定把成品部署到什麼地方，所以就直接選擇 Amazon S3，並選擇我們之前設定好的 bucket - `aweimeow-blog-public`。
+在最後，我們要設定把成品部署到什麼地方，所以就直接選擇 Amazon S3，並選擇我們之前設定好的 bucket - `aweimeow-blog-public`，部署路徑可以不填寫，也可以填寫 Bucket 當中的特定路徑。
+
+![設定部署的目的地](https://i.imgur.com/8HOQMIS.png)
 
 到了這一個步驟，你的 Pipeline 已經建立好了，但因為現在還沒有透過 `buildspec.yml` 來定義行為，因此我們只能觀察到 Pipeline 把程式碼拉下來放到 `aweimeow-blog-build` Bucket，但卻不會執行任何動作。
 
+## 設定 CodeBuild 的 bucket access 權限
+
+![很開心的執行了 pipeline 居然噴錯了！](https://i.imgur.com/5iyxazb.png)
+
+{% colorquote danger %}
+原因是因為 `CLIENT_ERROR: AccessDenied: Access Denied status code: 403`，**我們並沒有賦予 CodeBuild 存取 S3 Bucket 的權限**。因此，我們需要到 IAM 當中修改 CodeBuild 的權限，因此點選服務選單：**IAM > 角色 > `codebuild-<ProjectName>`**，可以發現這個角色連結著一個政策（Policy）- `CodeBuildBasePolicy-<BuildName>-<region>`，而就是**它的 S3 Access Policy 沒有設定好**。
+
+{% endcolorquote %}
+
+![CodeBuild 預設被設定成只能操作 codepipeline 開頭的 Bucket 了](https://i.imgur.com/bnWxpBm.png)
+
+因此，我們要修改這些規則，直接指定能修改的 Bucket 為 `aweimeow-blog-build` 裡面的任何資源，就像這樣：
+
+![指定 Bucket 的 ARN 來給予 CodeBuild 操作權限](https://i.imgur.com/thetFSo.png)
+
+
 <hr>
+
+現在你的 Pipeline 已經可以啟動了，但是如果沒有寫 BuildSpec 的話，CodeBuild 還是不知道你的程式碼要怎麼被建置和測試，所以下篇會介紹怎麼寫 BuildSpec。
 
 下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2 （CodeBuild BuildSpec 篇）](/aws-codepipeline-build-cicd-blog-2/)
