@@ -108,3 +108,5 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 現在你的 Pipeline 已經可以啟動了，但是如果沒有寫 BuildSpec 的話，CodeBuild 還是不知道你的程式碼要怎麼被建置和測試，所以下篇會介紹怎麼寫 BuildSpec。
 
 下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2 （CodeBuild BuildSpec 篇）](/aws-codepipeline-build-cicd-blog-2/)
+
+{% link XD aws-code-pipeline-build-cicd-blog-2 %}
