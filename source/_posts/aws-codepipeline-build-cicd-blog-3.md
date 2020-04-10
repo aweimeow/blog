@@ -98,4 +98,4 @@ exports.handler = (event, context, callback) => {
 
 但如果你也使用 Hexo blog engine，那說不定下一篇的內容會對你在部署 Hexo 到 AWS 會有些幫助。
 
-下一篇：以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - I （後記篇）
+下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - I （後記篇）](/aws-codepipeline-build-cicd-blog-i/)
