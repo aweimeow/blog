@@ -3,7 +3,7 @@ title: 以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 1
 date: 2020-04-08 15:15:00
 categories: [系統維運]
 tags: [aws, codepipeline, codebuild, webhosting]
-thumbnail: https://i.imgur.com/cfrCEZ1.png
+thumbnail: https://i.imgur.com/WO6pkKv.png
 ---
 
 故事是這樣子的，有了 CI/CD 的經驗之後，無意之間逛到 AWS CodePipeline 時，腦海中靈光一現，假設我在寫好新文章時，把文章的原始碼 commit 到 GitHub 的版本控制庫後，能夠自動更新到我的網站上的話就太方便了。
@@ -12,7 +12,7 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 ## 一不小心越弄越大
 
-![AWS Services Chain for Blog CI/CD Architecture](https://i.imgur.com/cfrCEZ1.png)
+![AWS Services Chain for Blog CI/CD Architecture](https://i.imgur.com/WO6pkKv.png)
 
 然而，這個簡單的假想就越搞越大，到後來為了讓網站服務完整一點，又 **搭配了 Route 53、CloudFront、Lambda 才達到我心中的效果** ，在實作過程當中，我們會需要具備一些關於 AWS 平臺的知識，例如說每一個服務的使用者（User）和角色（Role）都不同。這一些使用者、角色、政策都具備不一樣的權限，所以你也有可能需要到 **AWS Identity and Access Manager (IAM)** 更新權限。
 
@@ -20,7 +20,7 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 ## CodePipeline 與 CodeBuild 的關係
 
-![AWS CodePipeline 的組成](https://i.imgur.com/FfQUH7D.png)
+![AWS CodePipeline 的組成](https://i.imgur.com/2yYqaTk.png)
 
 首先，[CodeBuild](https://aws.amazon.com/tw/codebuild/) 是一套持續整合（Continous Integration）的服務，我們可以透過自定義的 script 來建置或測試程式。[CodePipeline](https://aws.amazon.com/tw/codepipeline/) 則是持續交付（Continous Delivery）的服務，我們能夠定義一個完整的 pipeline，來控制專案開發週期的每一個階段。
 
@@ -39,7 +39,7 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 {% colorquote success %}
 為了使輸出結果可以被公開存取到，我們必須調整 `aweimeow-blog-public` 的公開存取設定，讓他們不會把新的 Access Policy 封鎖。
 
-![作為靜態網站 Bucket 的公開存取設定](https://i.imgur.com/HxyZxdb.png)
+![作為靜態網站 Bucket 的公開存取設定](https://i.imgur.com/ty84J2H.png)
 
 並且在它的 Access Policy 寫上以下內容：
 
@@ -65,11 +65,11 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 在建立 pipeline 的第一步，我們需要設定 pipeline 的名稱、build 過程中檔案存放的地方，還有 Pipeline 所使用的角色。
 
-![Pipeline Configuration Step 1](https://i.imgur.com/6fdv7FC.png)
+![Pipeline Configuration Step 1](https://i.imgur.com/LbX5uZ1.png)
 
 下一步，我們會新增 pipeline 要建置的來源，此時會需要授權給 AWS 存取 GitHub 的專案，我選擇使用 GitHub WebHook，只要專案有新的 commit 時，就會送一個請求給 AWS Pipeline，部落格也就會開始建置了。其實，AWS 還會幫我們 config 好 WebHook，如果回到 GitHub 的專案設定，你就會看到 WebHook 的 URL 已經被設定好了。
 
-![GitHub WebHook Setting](https://i.imgur.com/RtzhH5R.png)
+![GitHub WebHook Setting](https://i.imgur.com/Aadu3Y9.png)
 
 ### 建立一個 CodeBuild 專案
 
@@ -83,24 +83,24 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 在最後，我們要設定把成品部署到什麼地方，所以就直接選擇 Amazon S3，並選擇我們之前設定好的 bucket - `aweimeow-blog-public`，部署路徑可以不填寫，也可以填寫 Bucket 當中的特定路徑。
 
-![設定部署的目的地](https://i.imgur.com/8HOQMIS.png)
+![設定部署的目的地](https://i.imgur.com/zM453dn.png)
 
 到了這一個步驟，你的 Pipeline 已經建立好了，但因為現在還沒有透過 `buildspec.yml` 來定義行為，因此我們只能觀察到 Pipeline 把程式碼拉下來放到 `aweimeow-blog-build` Bucket，但卻不會執行任何動作。
 
 ## 設定 CodeBuild 的 bucket access 權限
 
-![很開心的執行了 pipeline 居然噴錯了！](https://i.imgur.com/5iyxazb.png)
+![很開心的執行了 pipeline 居然噴錯了！](https://i.imgur.com/stLZO7c.png)
 
 {% colorquote danger %}
 原因是因為 `CLIENT_ERROR: AccessDenied: Access Denied status code: 403`，**我們並沒有賦予 CodeBuild 存取 S3 Bucket 的權限**。因此，我們需要到 IAM 當中修改 CodeBuild 的權限，因此點選服務選單：**IAM > 角色 > `codebuild-<ProjectName>`**，可以發現這個角色連結著一個政策（Policy）- `CodeBuildBasePolicy-<BuildName>-<region>`，而就是**它的 S3 Access Policy 沒有設定好**。
 
 {% endcolorquote %}
 
-![CodeBuild 預設被設定成只能操作 codepipeline 開頭的 Bucket 了](https://i.imgur.com/bnWxpBm.png)
+![CodeBuild 預設被設定成只能操作 codepipeline 開頭的 Bucket 了](https://i.imgur.com/gMH8HnL.png)
 
 因此，我們要修改這些規則，直接指定能修改的 Bucket 為 `aweimeow-blog-build` 裡面的任何資源，就像這樣：
 
-![指定 Bucket 的 ARN 來給予 CodeBuild 操作權限](https://i.imgur.com/thetFSo.png)
+![指定 Bucket 的 ARN 來給予 CodeBuild 操作權限](https://i.imgur.com/OhSfM7R.png)
 
 
 <hr>
@@ -108,5 +108,3 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 現在你的 Pipeline 已經可以啟動了，但是如果沒有寫 BuildSpec 的話，CodeBuild 還是不知道你的程式碼要怎麼被建置和測試，所以下篇會介紹怎麼寫 BuildSpec。
 
 下一篇：[以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2 （CodeBuild BuildSpec 篇）](/aws-codepipeline-build-cicd-blog-2/)
-
-{% link XD aws-code-pipeline-build-cicd-blog-2 %}

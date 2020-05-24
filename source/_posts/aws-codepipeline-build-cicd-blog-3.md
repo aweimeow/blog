@@ -3,7 +3,7 @@ title: 以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 3
 date: 2020-04-10 15:15:00
 categories: [系統維運]
 tags: [aws, s3, lambda, route53, cloudfront, webhosting]
-thumbnail: https://i.imgur.com/cfrCEZ1.png
+thumbnail: https://i.imgur.com/WO6pkKv.png
 ---
 
 設定好了 CodePipeline 與 CodeBuild 之後，我們在 push 新的 commit 到 GitHub 時，應該可以看到 CodePipeline 被觸發，接著啟動了一連串的建置流程，並且把成品部署到 S3 bucket 當中。不過，現在的網站還不算完成，雖然可以透過 AWS S3 的 endpoint 存取到內容了，但是不僅不方便使用者存取，SEO 的排名也不會上去。因此，我們會透過 Route53、CloudFront 與 lambda 來加強網站的使用者體驗。
@@ -32,7 +32,7 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 ## Lambda、Route53 與 CloudFront
 
-![使用者瀏覽網頁時的 Service Chain](https://i.imgur.com/vWLToJf.png)
+![使用者瀏覽網頁時的 Service Chain](https://i.imgur.com/p2Gr2Wf.png)
 
 當使用者在瀏覽網頁時，連線到我的 Domain - `weiyu.dev`，會回應 CloudFront 節點的 URL。當使用者在拜訪 `https://weiyu.dev` 時，實際上拜訪的卻是 `https://d1v********dml.cloudfront.net`，看到的網頁也不會是最新的網頁，而是早在一段時間以前，CloudFront 快取 S3 Bucket 的網頁內容。
 
@@ -56,11 +56,11 @@ Lambda 的工作是把網址補全，也就是說，當使用者存取 `https://
 
 ACM 會需要我們在 DNS record 裡面放置一個紀錄來供 ACM 查詢，確定我們擁有這個網域的控制權。
 
-![設定 CloudFront 的 Distribution](https://i.imgur.com/PZR2KMY.png)
+![設定 CloudFront 的 Distribution](https://i.imgur.com/1KaPJfj.png)
 
 在設定的過程當中，我們可以設定像是：Default root document、要支援哪一些 HTTP 版本（HTTP/2、HTTP/1.1 ...），以及需不需要 CloudFront 留下記錄檔。不過最重要的是設定 source，也就是我們公開的 S3 bucket `aweimeow-blog-public`。
 
-![在 CloudFront 裡面設定內容來源](https://i.imgur.com/gUjdGD7.png)
+![在 CloudFront 裡面設定內容來源](https://i.imgur.com/gW79p8b.png)
 
 讓我們回到 **Route53**，在 Route53 當中，我們可以直接建立 `alias record`，把 `weiyu.dev.` 指向到剛剛建立好的 CloudFront 資源，這樣子就把全部都串起來了。
 

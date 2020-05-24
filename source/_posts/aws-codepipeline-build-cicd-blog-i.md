@@ -3,7 +3,7 @@ title: 以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 後記
 date: 2020-04-11 23:00:00
 categories: [軟體開發]
 tags: [hexo, cloudfront, buildspec]
-thumbnail: https://i.imgur.com/cfrCEZ1.png
+thumbnail: https://i.imgur.com/WO6pkKv.png
 ---
 
 儘管我們的部落格已經架設完畢，也已經能夠用 CodePipeline 進行自動建置部署了，但是使用者瀏覽網站時，可能因為 Hexo 本身與 Hexo 主題的設定比較通用一點（適用於大多數環境，但不完全適用於我們的情境），所以網站上的每一個按鈕、連結我都親自確認過是可以使用的才敢發佈。在這一篇文章當中，我們會說明可能會有的問題和解決方法。
@@ -21,7 +21,7 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 前兩個問題是使用者體驗的問題，當使用者在瀏覽網頁時，如果突然見到了由 Amazon 提供的錯誤頁面，也許會滿頭問號。所以，除了設定好自定義的錯誤頁面以外，我們也需要把 Hexo 主題的連結稍微修正一下比較好，例如 `url_for('/archives')` 改成 `url_for('/archives/')`。
 
-![Amazon S3 bucket 回傳的 403 Forbinden 禁止存取錯誤](https://i.imgur.com/lYCA7n3.png)
+![Amazon S3 bucket 回傳的 403 Forbinden 禁止存取錯誤](https://i.imgur.com/MEeiqS1.png)
 
 最後一個問題則是因為我們的程式碼都託管於 GitHub 上，而且是以 public repository 存在的，任何人都可以存取程式碼，如果我們的設定檔當中包含一些比較隱私的資料，如：Google Analytics 的 Tracking ID、Disqus 的 shorturl，或是**其他服務的金鑰** ... 等，那麼把這些資料藏起來就是一件很重要的事情了。
 
@@ -29,11 +29,11 @@ thumbnail: https://i.imgur.com/cfrCEZ1.png
 
 和 `/about/` 頁面相同，我們只需要在 `$PROJECT/source/` 底下建立一個 `missing` 的資料夾，並放一個 `index.md` 在裡面，重新 generate 靜態網頁時，就可以看到 **[weiyu.dev/missing/](/missing/)** 已經可以連線到了。
 
-![my customized 404 page](https://i.imgur.com/np0D5vX.png)
+![my customized 404 page](https://i.imgur.com/ahQ7IRG.png)
 
 所以我們已經有一個錯誤頁面可以用了，下一步就是打開 AWS 主控台，`CloudFront > 分佈 > 錯誤頁面`，可以透過這一頁來自訂發生錯誤時的處理方式。如果你的網頁有著「不能回傳 404 Not Found」的需求，你也可以指定在發生 **404 Not Found** 時，回應 **200 OK** 搭配自定義的錯誤頁面。
 
-![建立錯誤回應，由 CloudFront 回傳指定的頁面](https://i.imgur.com/hPX9keR.png)
+![建立錯誤回應，由 CloudFront 回傳指定的頁面](https://i.imgur.com/t1D7h6s.png)
 
 在 CloudFront 裡面可以設定大部分常見的 HTTP Status Code 4xx and 5xx，但在現實情況之下，我們比較常碰到也就是那幾個而已，[更多 HTTP 狀態代碼可以參考維基百科](https://zh.wikipedia.org/zh-tw/HTTP状态码#4xx客户端错误)。
 
@@ -91,7 +91,7 @@ counter: {
 
 第一個步驟的連結是 **申請 GitHub 個人 Token 的設定**，Token 說明可以填入 `AWS CodeBuild for blog pipeline`，這邊的 Note 只需要是你能夠清楚辨識用途的即可。我們需要的權限只是對 repo 的存取權，其他選項都可以不用勾選。
 
-![申請 GitHub access token 所需要的權限](https://i.imgur.com/kt4lqhM.png)
+![申請 GitHub access token 所需要的權限](https://i.imgur.com/gxKNFVb.png)
 
 {% colorquote danger %}
 記得收好這一串 Token，如果被別人撿到他，就**相當於是擁有讀取你的公共及私有專案的權力**。如果你的 Token 還開了其他權限，甚至還有機會可以覆蓋你的 commits、刪除你的專案。
@@ -99,7 +99,7 @@ counter: {
 
 下一步，把 Token 寫入到 CodeBuild 的專案當中，點開 CodeBuild 專案後，找到 `編輯 > 環境 > 其他組態 > 環境變數`，並填上 `GITHUB_OAUTH_KEY`，值則是第一步的那一串文字。
 
-![把 GitHub Access Token 填入到 CI 專案的環境變數當中](https://i.imgur.com/N4ejoq1.png)
+![把 GitHub Access Token 填入到 CI 專案的環境變數當中](https://i.imgur.com/Cqqj1fk.png)
 
 最後則是在 `buildspec.yml` 當中放入 **clone 私有專案的指令**：
 

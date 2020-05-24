@@ -3,7 +3,7 @@ title: 以 AWS 及 GitHub 為部落格打造 CI/CD Pipeline - 2
 date: 2020-04-09 15:15:00
 categories: [系統維運]
 tags: [aws, codebuild, buildspec, webhosting]
-thumbnail: https://i.imgur.com/cfrCEZ1.png
+thumbnail: https://i.imgur.com/WO6pkKv.png
 ---
 
 到了現在，我們已經部署好我們的 AWS CodePipeline，如果你到放置建置檔案的 Bucket，應該可以看到 CodePipeline 從 GitHub 拉過來的程式碼，程式碼用 zip 的方式保存。在 pipeline 建立好之後，我們接下來要撰寫 Build spec，因為 CodeBuild 會根據 spec 的內容來依序執行由我們定義的建置步驟。
