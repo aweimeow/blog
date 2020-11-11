@@ -28,6 +28,8 @@ thumbnail: https://i.imgur.com/ePnX1R6.png
 3. 實作收到 gRPC request 時的動作
 4. 實作 Http reverse proxy
 
+範例程式碼：[GitHub:aweimeow/grpc-gateway-example](https://github.com/aweimeow/grpc-gateway-example)
+
 {% endcolorquote %}
 
 ## 撰寫你的 Service protobuf file
