@@ -18,7 +18,7 @@ thumbnail: https://i.imgur.com/ePnX1R6.png
 
 而我們實作好 gRPC server 也就可以讓 Http reverse proxy 產生作用，把我們的 Http RESTful request 轉換成 gRPC request 並得到結果。
 
-{% colorquote info %}
+{% message color:info %}
 **實作 gRPC service 的步驟**
 
 其實要以 grpc-gateway 實作 Http reverse proxy 的步驟很簡單，只需要新增一個 gRPC endpoint 來告訴 reverse proxy 要把 RESTful 的請求往哪一個地方轉送，Reverse proxy 就會幫忙把他轉成 gRPC request 並代為向 gRPC server 溝通了。
@@ -30,7 +30,7 @@ thumbnail: https://i.imgur.com/ePnX1R6.png
 
 範例程式碼：[GitHub:aweimeow/grpc-gateway-example](https://github.com/aweimeow/grpc-gateway-example)
 
-{% endcolorquote %}
+{% endmessage %}
 
 ## 撰寫你的 Service protobuf file
 

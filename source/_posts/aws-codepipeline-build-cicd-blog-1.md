@@ -36,14 +36,14 @@ thumbnail: https://i.imgur.com/WO6pkKv.png
 
 在此之前，你需要先建立兩個 S3 Bucket，一個作為建置時放置程式碼和建置 logs 用，另一個 bucket 的用途則是存放輸出檔案並建立靜態網站，建立 bucket 的過程不再贅述，應該可以找得到很多相關資源。至於這兩個 buckets 的名稱，我將它們命名為 `aweimeow-blog-build` 與 `aweimeow-blog-public`，讓接下來更容易辨識。
 
-{% colorquote success %}
+{% message color:success %}
 為了使輸出結果可以被公開存取到，我們必須調整 `aweimeow-blog-public` 的公開存取設定，讓他們不會把新的 Access Policy 封鎖。
 
 ![作為靜態網站 Bucket 的公開存取設定](https://i.imgur.com/ty84J2H.png)
 
 並且在它的 Access Policy 寫上以下內容：
 
-```json
+
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -56,10 +56,10 @@ thumbnail: https://i.imgur.com/WO6pkKv.png
         }
     ]
 }
-```
+
 
 這個規則會讓 bucket 當中的內容可以被所有人存取。
-{% endcolorquote %}
+{% endmessage %}
 
 ### 建立一個 CodePipeline
 
@@ -91,10 +91,10 @@ thumbnail: https://i.imgur.com/WO6pkKv.png
 
 ![很開心的執行了 pipeline 居然噴錯了！](https://i.imgur.com/stLZO7c.png)
 
-{% colorquote danger %}
+{% message color:success %}
 原因是因為 `CLIENT_ERROR: AccessDenied: Access Denied status code: 403`，**我們並沒有賦予 CodeBuild 存取 S3 Bucket 的權限**。因此，我們需要到 IAM 當中修改 CodeBuild 的權限，因此點選服務選單：**IAM > 角色 > `codebuild-<ProjectName>`**，可以發現這個角色連結著一個政策（Policy）- `CodeBuildBasePolicy-<BuildName>-<region>`，而就是**它的 S3 Access Policy 沒有設定好**。
 
-{% endcolorquote %}
+{% endmessage %}
 
 ![CodeBuild 預設被設定成只能操作 codepipeline 開頭的 Bucket 了](https://i.imgur.com/gMH8HnL.png)
 

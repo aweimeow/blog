@@ -10,11 +10,12 @@ phases:
     commands:
       - echo Entered the install phase...
     runtime-versions:
-      nodejs: 19
+      nodejs: 16
   pre_build:
     commands:
       - git clone https://aweimeow:$GITHUB_OAUTH_KEY@github.com/$BLOG_CONF_REPO
       - npm install
+      - npm install hexo-cli -g
   build:
     commands:
       - echo "Build started on `date`, triggered by $CODEBUILD_WEBHOOK_TRIGGER"
@@ -22,6 +23,7 @@ phases:
       - cp $BLOG_CONF_DIR/img/* ./node_modules/hexo-theme-icarus/source/img/
       - cp $BLOG_CONF_DIR/css/custom.styl ./node_modules/hexo-theme-icarus/source/css/
       - echo "@import 'custom'" >> ./node_modules/hexo-theme-icarus/source/css/default.styl
+      - ls -al ./node_modules/hexo-theme-icarus/source/css
       - hexo generate
   post_build:
     commands:

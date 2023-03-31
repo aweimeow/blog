@@ -12,7 +12,7 @@ thumbnail: https://i.imgur.com/WO6pkKv.png
 
 ## 什麼都不做的話，網站會是什麼樣子？
 
-{% colorquote info %}
+{% message color:info %}
 **連得到的網址**
 * https://aweimeow-blog-public.s3-ap-northeast-1.amazonaws.com/
 * https://aweimeow-blog-public.s3-ap-northeast-1.amazonaws.com/index.html
@@ -20,7 +20,7 @@ thumbnail: https://i.imgur.com/WO6pkKv.png
 
 **連不到的網址**
 * https://aweimeow-blog-public.s3-ap-northeast-1.amazonaws.com/archive/
-{% endcolorquote %}
+{% endmessage %}
 
 這一些連結除了不好閱讀以外，還會有一些更實際的問題：**除了 Root directory** 以外，其他的網址沒辦法使用 `/archives/`、`/tags/` 等方式來連線到，所以我搭配了 Lambda 來補全 URL。
 
@@ -42,9 +42,9 @@ Lambda 的工作是把網址補全，也就是說，當使用者存取 `https://
 
 所以當使用者嘗試存取 `https://weiyu.dev/archives/` 時，Lambda 的腳本會判斷使用者連線的網址是什麼，如果是符合正則表達式 `/$`（就是以 `/` 結尾的網址），都會自動補上 `index.html`，就不會出現找不到檔案的問題了。而且使用者對此是完全無感的，因為 CloudFront 就像是一個 Proxy 一樣，它會代替使用者去抓取 S3 bucket 內容，抓取過程中經過 Lambda 修改網址才找得到正確的檔案，所以使用者存取的網址不會改變。
 
-{% colorquote warning %}
+{% message color:warning %}
 **.dev** 的網址是我在 [Google Domain](https://domain.google/) 購買的，因為 Route53 上買不到 .dev，所以我就把 Google 的 NS setting 指向到 Route53 指定的網址了。
-{% endcolorquote %}
+{% endmessage %}
 
 ## 設定 Route53 與 CloudFront
 
@@ -70,9 +70,9 @@ ACM 會需要我們在 DNS record 裡面放置一個紀錄來供 ACM 查詢，�
 
 這一篇文章當中，說明了為了效能及擴展性而搭配 CloudFront 服務時，CloudFront 只能夠針對網站根目錄的 index.html 做到 **Default Directory Indexes**，一旦連到其他子網頁，就會造成很差的使用者體驗。所以使用了 Lambda@Edge 來部署一個腳本，當使用者透過 CloudFront 存取網站時，會先觸發部署在 Lambda 上面的腳本程式碼，最後才把請求輸出到 S3 buckets。
 
-{% colorquote danger %}
+{% message color:danger %}
 但是 Lambda@Edge 的功能只支援維吉尼亞州北部（us-east-1），所以你只能把腳本部署在這個區域當中。不過 CloudFront 無論在哪一個 region 都能接到部署在 `us-east-1` 的 Lambda 腳本，不用擔心。
-{% endcolorquote %}
+{% endmessage %}
 
 ### Default Directory 腳本
 

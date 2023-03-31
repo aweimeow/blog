@@ -109,11 +109,11 @@ artifacts:
 * **建置過程（build）**：建置的主要核心指令放在這裡，例如 make
 * **建置後指令（post_build）**：在建置完成後可能需要打包執行檔，或是把製作好的 Image 推到 DockerHub
 
-{% colorquote danger %}
+{% message color:danger %}
 需要特別提醒的是，如果你的專案使用了 Git submodule 的話，CodeBuild 不會幫忙把 submodule 的內容一起 clone 下來，所以我在 `pre_build` 階段額外下載了整個 submodule 並放到正確的目錄位置。
 
 除此之外，因為我們有在 CodePipeline 設定好來源，所以 CodeBuild 很貼心的會幫我們把指令執行在「專案根目錄」當中，不需要把 `cd $PROJECT` 寫在 step 當中。
-{% endcolorquote %}
+{% endmessage %}
 
 ## BuildSpec 的輸出檔案 - artifacts
 
@@ -137,7 +137,7 @@ artifacts:
 
 ### artifacts 的路徑設定
 
-{% colorquote info %}
+{% message color:info %}
 但是，我們有時候只要某一個資料夾作為輸出，而且只需要以某些副檔名結尾的檔案，那要怎麼做？在官方文件裡面也舉出了一些例子給大家參考，假設我們的資料夾結構是這樣子的：
 
 ```
@@ -148,7 +148,7 @@ artifacts:
       `-- my-subdirectory
             `-- my-file3.txt
 ```
-{% endcolorquote %}
+{% endmessage %}
 
 * **當我們的目標是取得所有的檔案，且希望可以把路徑都拿掉（所有檔案都被放在同一個 layer 的資料夾下）**
 

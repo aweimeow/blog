@@ -93,9 +93,9 @@ counter: {
 
 ![申請 GitHub access token 所需要的權限](https://i.imgur.com/gxKNFVb.png)
 
-{% colorquote danger %}
+{% message color:danger %}
 記得收好這一串 Token，如果被別人撿到他，就**相當於是擁有讀取你的公共及私有專案的權力**。如果你的 Token 還開了其他權限，甚至還有機會可以覆蓋你的 commits、刪除你的專案。
-{% endcolorquote %}
+{% endmessage %}
 
 下一步，把 Token 寫入到 CodeBuild 的專案當中，點開 CodeBuild 專案後，找到 `編輯 > 環境 > 其他組態 > 環境變數`，並填上 `GITHUB_OAUTH_KEY`，值則是第一步的那一串文字。
 
