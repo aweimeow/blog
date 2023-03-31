@@ -4,7 +4,6 @@ env:
   variables:
     BLOG_CONF_DIR: "my-blog-config"
     BLOG_CONF_REPO: "aweimeow/my-blog-config.git"
-    SUBMODULE_URL: "https://github.com/aweimeow/hexo-theme-icarus/archive/weiyu.dev.zip"
 
 phases:
   install:
@@ -15,17 +14,14 @@ phases:
   pre_build:
     commands:
       - git clone https://aweimeow:$GITHUB_OAUTH_KEY@github.com/$BLOG_CONF_REPO
-      - curl -s -L $SUBMODULE_URL -o icarus.zip && unzip -qq icarus.zip -d /tmp
-      - mv /tmp/hexo-theme-icarus-weiyu.dev/* themes/icarus/
-      - npm install hexo-cli -g
-      - npm install hexo --save
-      - npm install hexo-generator-feed --save
-      - npm install --force
+      - npm install
   build:
     commands:
       - echo "Build started on `date`, triggered by $CODEBUILD_WEBHOOK_TRIGGER"
-      - cp $BLOG_CONF_DIR/hexo/* .
-      - cp $BLOG_CONF_DIR/theme/icarus/* themes/icarus/
+      - cp $BLOG_CONF_DIR/conf .
+      - cp $BLOG_CONF_DIR/img/* ./node_modules/hexo-theme-icarus/source/img/
+      - cp $BLOG_CONF_DIR/css/custom.styl ./node_modules/hexo-theme-icarus/source/css/
+      - echo "@import 'custom'" >> ./node_modules/hexo-theme-icarus/source/css/default.styl
       - hexo generate
   post_build:
     commands:
