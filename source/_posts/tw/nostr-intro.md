@@ -6,6 +6,8 @@ tags: [blockchain, nostr, damus]
 thumbnail: /images/nostr-intro/nostr.png
 ---
 
+{% multilanguage en nostr-intro %}
+
 Nostr 是一個旨在建立一個無法被審查的全球社交網絡的協議。與當前的社交媒體不同，Nostr 旨在提供更安全、更開放和更自由的環境。本篇文章將介紹 Nostr 協議的基本概念，以及如何開始使用 Nostr 作為社交媒體。
 
 <!-- more -->
