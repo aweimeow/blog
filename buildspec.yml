@@ -20,6 +20,7 @@ phases:
     commands:
       - echo "Build started on `date`, triggered by $CODEBUILD_WEBHOOK_TRIGGER"
       - cp $BLOG_CONF_DIR/conf/* .
+      - cp $BLOG_CONF_DIR/js/* ./node_modules/hexo-theme-icarus/scripts/
       - cp $BLOG_CONF_DIR/img/* ./node_modules/hexo-theme-icarus/source/img/
       - cp $BLOG_CONF_DIR/css/custom.styl ./node_modules/hexo-theme-icarus/source/css/
       - echo "@import 'custom'" >> ./node_modules/hexo-theme-icarus/source/css/default.styl
