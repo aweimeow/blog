@@ -1,9 +1,9 @@
 ---
 title: 辨識網路交易買賣詐騙的技巧
-date: 2023-07-25 00:00:00
-categories: []
+date: 2023-07-25 16:00:00
+categories: [點數哩程]
 tags: [mileage]
-thumbnail: /images/eva-airline-mileage/flight.jpg
+thumbnail: /images/identify-scammers-in-facebook/lock.jpg
 ---
 
 不經一事，不長一智。儘管我已經仔細核實賣家身份，但是仍然栽在知識不夠豐富，在此篇我整理出一些辨識詐騙的技巧，希望能夠讓大家減少被詐騙的機率。
@@ -80,3 +80,5 @@ thumbnail: /images/eva-airline-mileage/flight.jpg
 ## 參考資料
 
 1. [改號欺詐 Caller ID Spoofing](https://zh.wikipedia.org/zh-tw/%E6%94%B9%E5%8F%B7%E6%AC%BA%E8%AF%88)
+
+*Photo by <a href="https://unsplash.com/es/@jsalvino?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">John Salvino</a> on <a href="https://unsplash.com/photos/bqGBbLq_yfc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>*

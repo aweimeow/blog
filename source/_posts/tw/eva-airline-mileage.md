@@ -1,7 +1,7 @@
 ---
 title: 長榮航空里程升等規定 / 客服電話 / 盲按
 date: 2023-07-22 00:00:00
-categories: [點數里程]
+categories: [點數哩程]
 tags: [EVA airline, mileage]
 thumbnail: /images/eva-airline-mileage/flight.jpg
 ---
