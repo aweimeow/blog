@@ -3,7 +3,7 @@ title: 辨識網路交易買賣詐騙的技巧
 date: 2023-07-25 16:00:00
 categories: [點數哩程]
 tags: [mileage]
-thumbnail: /images/identify-scammers-in-facebook/lock.jpg
+thumbnail: /images/identify-scammers-in-facebook/thumbnail.jpeg
 ---
 
 不經一事，不長一智。儘管我已經仔細核實賣家身份，但是仍然栽在知識不夠豐富，在此篇我整理出一些辨識詐騙的技巧，希望能夠讓大家減少被詐騙的機率。
