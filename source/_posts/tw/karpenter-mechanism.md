@@ -6,6 +6,8 @@ tags: [karpenter, kubernetes]
 thumbnail: /images/karpenter-mechanism/thumbnail.png
 ---
 
+{% multilanguage en karpenter-mechanism %}
+
 這一篇文章中，主要介紹了 Karpenter 的核心運作流程，包含 Karpenter 如何過濾需要被規劃的 Pod，以及實際 Pod 被規劃到工作節點上的過程。
 
 <!-- more -->
@@ -116,8 +118,6 @@ func (s *Scheduler) Solve(ctx context.Context, pods []*v1.Pod) *Results {
 
 當我們已經把 Pod 能分配的都分配完了，剩下還在 queue 當中的 Pod 就會為分配失敗的 Pod，Karpenter 會發送 `PodFailedToScheduleEvent` 到 Kubernetes API Server 當中記錄，這時也能夠在 `kubectl describe pod <pod-name>` 的時候注意到這個由 Karpenter 產生並寫入 Kubernetes control plane 的 Pod 事件。
 ```go
-# 以下程式碼來自 karpenter/pkg/controllers/provisioning/scheduling/scheduler.go
-
 		// If unsuccessful, relax the pod and recompute topology
 		relaxed := s.preferences.Relax(ctx, pod)
 		q.Push(pod, relaxed)   <------ 把 Pod 放回 queue 當中
