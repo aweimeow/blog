@@ -3,7 +3,7 @@ title: NeMo-Guardrails：控制聊天機器人行為的框架
 date: 2024-01-13
 categories: [語言模型]
 tags: [AI guardrails, LLM]
-thumbnail: /images/karpenter-mechanism/thumbnail.png
+thumbnail: /images/nemo-guardrails/thumbnail.png
 ---
 
 對於 Nemo-Guardrails 的使用體驗與感受方面，最讓我印象深刻的是容易上手的特性，開發團隊提供了幾個範例，逐步引導使用者快速瞭解這一套框架的核心功能。<!-- more -->此外，NeMo-Guardrails 讓使用者能夠自定義對話流程（在 NeMo-Guardrails 中稱之為 flow），這個功能可以根據不同的場景來設計對話的流程。也能夠定義輸入檢查與輸出檢查的功能（self input/output check），這個功能可以使 GPT 自我檢驗輸入或輸出是否合法，預防 Prompt Injection 等攻擊行為。最後，Nemo-Guardrails 也引入 Retrieval-Augmented Generation (RAG) 概念生成對話，透過建立知識庫功能（kb, knowledge base）使語言模型能夠根據對應的文件來產生正確的結果，提高語言模型輸出的正確率。
