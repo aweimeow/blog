@@ -24,7 +24,7 @@ Karpenter 是一套由 AWS 設計的工具，針對 Kubernetes 叢集中的工�
 
 ## Karpenter 的 Pod 規劃機制
 
-Karpenter的工作流程主要分為兩部分：確定哪些 Pod 需要被分配到工作節點當中，以及實際分配 Pod 到工作節點的過程。以下除了解釋以外，還會搭配原始碼搭配引導閱讀，原始碼採用目前最新的穩定版本 v0.33.1。主要用以分配 Pod 核心邏輯為 `karpenter/pkg/controllers/provisioning/provisioner.go` 的 [`func (p *Provisioner) Schedule(ctx context.Context)` function](https://github.com/kubernetes-sigs/karpenter/blob/v0.33.1/pkg/controllers/provisioning/provisioner.go#L296-L337)。
+Karpenter的工作流程主要分為兩部分：確定哪些 Pod 需要被分配到工作節點當中，以及實際分配 Pod 到工作節點的過程。以下除了解釋以外，還會搭配原始碼搭配引導閱讀，原始碼採用目前最新的穩定版本 v0.33.1。主要用以分配 Pod 核心邏輯為 [`func (p *Provisioner) Schedule(ctx context.Context)` function](https://github.com/kubernetes-sigs/karpenter/blob/v0.33.1/pkg/controllers/provisioning/provisioner.go#L296-L337)。
 
 #### 1. 如何確定哪些 Pod 需要被分配到工作節點
 
