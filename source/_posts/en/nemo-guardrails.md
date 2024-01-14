@@ -6,6 +6,8 @@ tags: [AI guardrails, LLM]
 thumbnail: /images/nemo-guardrails/thumbnail.png
 ---
 
+{% multilanguage tw nemo-guardrails %}
+
 Regarding my experience and impression of using NeMo-Guardrails, what struck me most was its user-friendly nature. The development team provided several examples that guide users step-by-step to quickly understand the core functionalities of this framework. <!-- more --> Moreover, NeMo-Guardrails allows users to customize dialogue flows (referred to as "flow" within NeMo-Guardrails), enabling the design of conversation processes for different scenarios. It also includes functionalities for input and output checks (self input/output check), allowing GPT to self-examine whether the input or output is valid and prevent attacks like Prompt Injection. Lastly, NeMo-Guardrails introduces the concept of Retrieval-Augmented Generation (RAG) to generate conversations. By establishing a knowledge base (kb, knowledge base), it allows the language model to produce accurate results based on relevant documents, thus enhancing the accuracy of the language model's outputs.
 
 In this article, I will attempt to create a chatbot for a telecommunications service provider. This is because some smart customer services in Taiwan only guide users to a webpage for information, rather than providing direct answers to queries. In this example, all conversations are conducted in English, as NeMo-Guardrails seems to have limited support for Chinese, leading to some unexpected results in my tests.
