@@ -1,6 +1,6 @@
 ---
 title: The IAM Role for Service Account behind the scene
-date: 2024-10-27 00:00:00
+date: 2024-10-30 20:00:00
 categories: [AWS things]
 tags: [AWS, EKS, IRSA, Pod Identity]
 thumbnail: /images/eks-irsa-mechanism/thumbnail.png
@@ -194,6 +194,8 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IjMyNzc1ZWNmNDU1MzRkOWIyOTdlNTA0ZmQ3ZTk0MDMwMDIzNjlm
 ```
 
 This credential can be decoded using a [JWT tool](https://jwt.io). The information must exactly match what's in the IAM Role's Trust Entity; otherwise, you'll encounter authentication errors when the Pod tries to authenticate with the AWS STS service.
+
+![The information decoded by JWT tool](/images/eks-irsa-mechanism/jwt-token.png)
 
 ### Step 4: AWS SDK's Interaction with AWS STS Service
 
