@@ -8,6 +8,10 @@ thumbnail: /images/karpenter-mechanism/thumbnail.png
 
 {% multilanguage tw karpenter-mechanism %}
 
+{% message color:danger %}
+**WARNING**: This article is out-dated.
+{% endmessage %}
+
 This article primarily introduces the core operational process of Karpenter, including how Karpenter filters Pods that need to be scheduled and the actual process of scheduling Pods onto worker nodes.
 
 <!-- more -->

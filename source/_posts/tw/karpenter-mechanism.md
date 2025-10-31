@@ -8,6 +8,12 @@ thumbnail: /images/karpenter-mechanism/thumbnail.png
 
 {% multilanguage en karpenter-mechanism %}
 
+
+{% message color:danger %}
+**注意**：這一篇文章已經過時！
+{% endmessage %}
+
+
 這一篇文章中，主要介紹了 Karpenter 的核心運作流程，包含 Karpenter 如何過濾需要被規劃的 Pod，以及實際 Pod 被規劃到工作節點上的過程。
 
 <!-- more -->
