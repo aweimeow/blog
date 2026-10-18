@@ -1,0 +1,6 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogShell from '../../components/BlogShell.astro';
+import { articles, topics, years, formatDate } from '../../data/site';
+---
+<Base title="Archives"><BlogShell><section class="card archive-card"><h1>Archives</h1><p class="quiet">{articles.length} articles, one place to browse.</p>{years.map(year => <section><h2 class="archive-year" id={`year-${year}`}>{year} <span>{articles.filter(a => a.date.startsWith(year)).length} {articles.filter(a => a.date.startsWith(year)).length === 1 ? 'post' : 'posts'}</span></h2><ol class="archive-list">{articles.filter(a => a.date.startsWith(year)).map(article => <li><time datetime={article.date} title={article.originalPublished}>{formatDate(article.date).replace(' '+year,'')}</time><div><a href={`/writing/${article.slug}/`}>{article.title}</a><span>{topics.find(t => t.slug === article.topic)?.name}</span></div></li>)}</ol></section>)}</section></BlogShell></Base>

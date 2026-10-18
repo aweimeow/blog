@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import BlogShell from '../components/BlogShell.astro';
+import { site } from '../data/site';
+const schema = { '@type': 'ProfilePage', url: `${site.url}/about/`, name: 'About Wei-Yu Chen', mainEntity: { '@id': `${site.url}/#person` } };
+---
+<Base title="About" schema={schema}><BlogShell><article class="card reading-card"><header class="reading-header"><div class="post-meta">A little about me</div><h1>Hi, I’m Wei-Yu.</h1><p class="article-summary">An engineer. This is where I write about what I build, investigate, and learn.</p></header><div class="prose"><p>I’m interested in how things work — from the infrastructure running a service to the decisions that make an AI workflow useful.</p><p>My technical focus includes AWS, Kubernetes, CI/CD, and AI application engineering. I use this blog to work through ideas, explain problems, and share practical approaches. Writing helps me make sense of the work.</p><h2>What you’ll find here</h2><p>Notes on AI workflows and tool integration, cloud infrastructure, troubleshooting, and the engineering choices in between. I care about understanding the actual problem, checking the evidence, and making the result useful to the next person.</p><h2>Stay in touch</h2><p>Follow new posts through <a href="/rss.xml">RSS</a>. Thanks for stopping by.</p></div></article></BlogShell></Base>

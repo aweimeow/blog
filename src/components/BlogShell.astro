@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/avatar.png';
+import { articles, topics, site, formatDate, years } from '../data/site';
+const { sections = [] } = Astro.props;
+---
+<div class="wrap blog-layout">
+  <aside class="left-sidebar" aria-label="About the author and topics">
+    <section class="card profile-card">
+      <a class="profile-avatar" href="/about/" aria-label="About Wei-Yu Chen"><Image src={avatar} alt="A sleeping cream and caramel cat" width={112} height={112} format="webp" quality={85} loading="eager" /></a>
+      <h2><a href="/about/">Wei-Yu Chen</a></h2>
+      <p class="profile-bio">Writing about useful AI, reliable systems, and what I learn building them.</p>
+      <div class="profile-counts"><a href="/archives/"><span>Articles</span><strong>{articles.length}</strong></a><a href="/categories/"><span>Topics</span><strong>{topics.length}</strong></a></div>
+      <a class="profile-follow" href="/rss.xml">Follow via RSS <span aria-hidden="true">↗</span></a>
+    </section>
+    <section class="card sidebar-card"><h2>Topics</h2><ul class="topic-list">{topics.map(topic => <li><a href={`/categories/${topic.slug}/`}><span>{topic.name}</span><span class="count">{articles.filter(article => article.topic === topic.slug).length}</span></a></li>)}</ul></section>
+    <section class="card sidebar-card short-note"><h2>A little about this blog</h2><p>Practical notes, questions worth exploring, and lessons from working with software.</p><a href="/about/">More about me <span aria-hidden="true">→</span></a></section>
+  </aside>
+  <div class="blog-content"><slot /></div>
+  <aside class="right-sidebar" aria-label="More to read">
+    {sections.length > 0 && <section class="card sidebar-card toc-card"><h2>In this article</h2><ol>{sections.map((section: string[]) => <li><a href={`#${section[0]}`}>{section[1]}</a></li>)}</ol></section>}
+    <section class="card sidebar-card"><h2>Recent posts</h2><ul class="recent-list">{articles.slice(0, 5).map((article, index) => <li><a href={`/writing/${article.slug}/`}><img class="recent-thumbnail" src={article.thumbnail} alt="" width="48" height="48" loading="lazy" /><span><time datetime={article.date}>{formatDate(article.date)}</time><span class="recent-title">{article.title}</span><span class="recent-category">{topics.find(t => t.slug === article.topic)?.name}</span></span></a></li>)}</ul></section>
+    <section class="card sidebar-card"><h2>Archives</h2>{years.map(year => <a class="archive-count" href={`/archives/#year-${year}`}><span>{year}</span><span class="count">{articles.filter(article => article.date.startsWith(year)).length}</span></a>)}</section>
+    <section class="card sidebar-card consulting-note"><span class="note-marker" aria-hidden="true"></span><h2>Working on something?</h2><p>I also help teams with AI engineering, AWS, and Kubernetes.</p><a href="/contact/">Get in touch <span aria-hidden="true">→</span></a></section>
+  </aside>
+</div>

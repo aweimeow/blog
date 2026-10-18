@@ -1,0 +1,6 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogShell from '../../components/BlogShell.astro';
+import { articles, topics } from '../../data/site';
+---
+<Base title="Topics"><BlogShell><section class="card archive-card"><h1>Topics</h1><p class="quiet">Find something you’re curious about.</p><ul class="topic-index">{topics.map(topic => <li><a href={`/categories/${topic.slug}/`}><span>{topic.name}</span><span>{articles.filter(article => article.topic === topic.slug).length} {articles.filter(article => article.topic === topic.slug).length === 1 ? 'article' : 'articles'} <span aria-hidden="true">→</span></span></a></li>)}</ul></section></BlogShell></Base>

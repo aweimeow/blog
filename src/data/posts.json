@@ -1,0 +1,205 @@
+[
+  {
+    "slug": "eks-node-two-ebs",
+    "title": "Give EKS Nodes a Dedicated EBS Volume for Containers",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2025-10-31",
+    "originalPublished": "2025-10-31",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Isolate containerd storage on a second EBS volume, configure an EKS launch template, and inspect disk I/O under load.",
+    "excerpt": [
+      "Lately I have been hitting situations where containers overload the system disk on my EKS nodes. Once the root disk maxes out its throughput, the operating system freezes, CPU usage spikes, and the node drops into NotReady. Even worse, the node stops accepting SSH, so I cannot inspect what actually went wrong. Kubernetes will eventually reschedule the Pods, but only after the node has stayed in NotReady for five minutes.",
+      "To keep this from happening again, I split the system disk and the container data disk into two separate EBS volumes so that container workloads always land on the second volume."
+    ],
+    "editorNote": "Originally published 2025-10-31. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/eks-node-two-ebs/thumbnail.png"
+  },
+  {
+    "slug": "eks-irsa-mechanism",
+    "title": "How IAM Roles for Service Accounts Work in EKS",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2024-10-30",
+    "originalPublished": "2024-10-30 20:00:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "7 min",
+    "description": "Follow IRSA from Pod admission and projected service-account tokens to AWS STS credentials and the node-role fallback.",
+    "excerpt": [
+      "Within Amazon EKS, we use IAM Role for Service Account (IRSA) or EKS Pod Identity to grant applications permission to call AWS APIs. While Pod Identity Agent won't be covered in this article, we'll explore how IRSA works in your EKS cluster. Understanding this feature better will help you troubleshoot issues when they arise.",
+      "Applications running in your cluster may need to call AWS APIs to manage AWS resources. For example, when you install an EKS Add-on like the EBS CSI Controller, it needs to interact with AWS APIs to perform tasks such as mounting EBS volumes to EKS worker nodes. The kubelet can then mount these volumes into Pods via the Container Storage Interface."
+    ],
+    "editorNote": "Originally published 2024-10-30. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment. Credential examples are sanitized; original screenshots are restored with identifying values masked.",
+    "thumbnail": "/images/eks-irsa-mechanism/thumbnail.png"
+  },
+  {
+    "slug": "nginx-ingress-controller-in-eks",
+    "title": "Deploying the NGINX Ingress Controller on EKS",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2024-01-27",
+    "originalPublished": "2024-01-27",
+    "modifiedDate": "2026-10-18",
+    "reading": "7 min",
+    "description": "Configure load-balancer access and TLS for NGINX on EKS, then deploy and test tea and coffee example services.",
+    "excerpt": [
+      "I spent some time researching how to deploy the Nginx Ingress Controller to an EKS cluster. Firstly, we can decide how to use the Nginx Ingress Controller, and you have several different choices:",
+      "Firstly, determine whether to use a Classic Load Balancer or a Network Load Balancer. In terms of installation, when an AWS Load Balancer Controller exists within the cluster, your Nginx Ingress Controller will be created as a Network Load Balancer (NLB). If the AWS Load Balancer Controller does not exist, then the controller will be deployed as a Classic Load Balancer Controller (CLB). As CLB is referred to as a previous generation load balancer by the AWS official guide [1], it is no longer recommended for use."
+    ],
+    "editorNote": "Originally published 2024-01-27. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/nginx-ingress-controller-in-eks/thumbnail.png"
+  },
+  {
+    "slug": "nemo-guardrails",
+    "title": "NeMo Guardrails: Controlling Chatbot Behavior",
+    "topic": "ai-engineering",
+    "category": "AI ENGINEERING",
+    "date": "2024-01-13",
+    "originalPublished": "2024-01-13",
+    "modifiedDate": "2026-10-18",
+    "reading": "13 min",
+    "description": "Build a telecommunications chatbot with Colang flows, input and output checks, and a retrieval-backed knowledge base.",
+    "excerpt": [
+      "Regarding my experience and impression of using NeMo-Guardrails, what struck me most was its user-friendly nature. The development team provided several examples that guide users step-by-step to quickly understand the core functionalities of this framework. Moreover, NeMo-Guardrails allows users to customize dialogue flows (referred to as \"flow\" within NeMo-Guardrails), enabling the design of conversation processes for different scenarios. It also includes functionalities for input and output checks (self input/output check), allowing GPT to self-examine whether the input or output is valid and help detect some prompt-injection attempts. Lastly, NeMo-Guardrails introduces the concept of Retrieval-Augmented Generation (RAG) to generate conversations. By establishing a knowledge base (kb, knowledge base), it allows the language model to produce accurate results based on relevant documents…"
+    ],
+    "editorNote": "Originally published 2024-01-13. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment. The Colang syntax, model name, and recorded outputs are historical; this is not a claim that those calls were rerun for this edition.",
+    "thumbnail": "/images/nemo-guardrails/thumbnail.png"
+  },
+  {
+    "slug": "karpenter-mechanism",
+    "title": "Karpenter: Architecture and a Walk Through the Source",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2024-01-12",
+    "originalPublished": "2024-01-12",
+    "modifiedDate": "2026-10-18",
+    "reading": "7 min",
+    "description": "A version-specific walk through Karpenter’s provisioning loop, scheduling constraints, NodeClaims, and Kubernetes events.",
+    "excerpt": [
+      "This article primarily introduces the core operational process of Karpenter, including how Karpenter filters Pods that need to be scheduled and the actual process of scheduling Pods onto worker nodes.",
+      "Karpenter is a tool designed by AWS for Kubernetes clusters. It scales the cluster based on the workload of worker nodes (instances). Karpenter has several features and functions:"
+    ],
+    "editorNote": "Originally published 2024-01-12. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/karpenter-mechanism/thumbnail.png"
+  },
+  {
+    "slug": "macbook-switch-from-intel-to-apple-silicon",
+    "title": "Moving a Development Environment from Intel to Apple Silicon",
+    "topic": "software",
+    "category": "SOFTWARE",
+    "date": "2023-10-31",
+    "originalPublished": "2023-10-31",
+    "modifiedDate": "2026-10-18",
+    "reading": "3 min",
+    "description": "Understand migrated Intel applications, Rosetta, and the Homebrew prefix differences that affect a development environment.",
+    "excerpt": [
+      "Migration Assistant made moving an Intel Mac's environment to an Apple Silicon MacBook look almost effortless. The problem appeared later: familiar development tools no longer behaved as expected, and even an attempt to run AutoGPT led to environment problems.",
+      "These notes record the two migration issues I investigated: Intel applications carried over unchanged, and the difference between Intel and Apple Silicon Homebrew installations."
+    ],
+    "editorNote": "Originally published 2023-10-31. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/macbook-switch-from-intel-to-apple-silicon/thumbnail.jpeg"
+  },
+  {
+    "slug": "free5gc-ueransim-5g",
+    "title": "Building a 5G Lab with free5GC and UERANSIM",
+    "topic": "mobile-networks",
+    "category": "MOBILE NETWORKS",
+    "date": "2020-12-08",
+    "originalPublished": "2020-12-08 12:00:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Revisit a complete 2020 5G lab: kernel and dependencies, free5GC and UERANSIM builds, subscribers, and PDU sessions.",
+    "excerpt": [
+      "This walkthrough builds a complete experimental 5G mobile network using the open-source free5GC core and UERANSIM, a simulator for user equipment and radio access. After starting both sides, the final check is an established PDU session and successful connectivity.",
+      "The commands document the December 2020 lab, including free5GC v3.0.4, Go 1.14.4, and the UERANSIM interface available then. They are retained as a historical procedure, not silently replaced with commands for a different generation of the software."
+    ],
+    "editorNote": "Originally published 2020-12-08. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/kCweWrn.png"
+  },
+  {
+    "slug": "grpc-gateway",
+    "title": "Adding an HTTP REST API to a gRPC Service with grpc-gateway",
+    "topic": "software",
+    "category": "SOFTWARE",
+    "date": "2020-11-10",
+    "originalPublished": "2020-11-10 19:00:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "6 min",
+    "description": "Define an employee service in protobuf, implement its gRPC methods, generate an HTTP gateway, and test it with cURL.",
+    "excerpt": [
+      "While integrating services, I used gRPC for application-to-application communication. An HTTP API would also make development and testing easier: a quick cURL request is more convenient than writing a gRPC client for every check.",
+      "grpc-gateway provides that bridge. It generates an HTTP reverse proxy that translates REST-style requests into calls to a gRPC service."
+    ],
+    "editorNote": "Originally published 2020-11-10. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/ePnX1R6.png"
+  },
+  {
+    "slug": "aws-codepipeline-build-cicd-blog-i",
+    "title": "A Blog CI/CD Pipeline with AWS and GitHub — Theme Fixes and Private Configuration",
+    "topic": "software",
+    "category": "SOFTWARE",
+    "date": "2020-04-11",
+    "originalPublished": "2020-04-11 23:00:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Finish a static-site pipeline with custom error pages, corrected Hexo links, and separately managed private configuration.",
+    "excerpt": [
+      "The pipeline now builds and deploys the blog, but a successful deployment is not the same as a working website. Hexo and its theme support many hosting environments, and some defaults did not match the S3 and CloudFront arrangement in this series.",
+      "Before publishing, I checked the site's buttons and links individually. This follow-up records the remaining problems: confusing error responses, directory links without trailing slashes, and configuration that should not live in a public repository."
+    ],
+    "editorNote": "Originally published 2020-04-11. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/WO6pkKv.png"
+  },
+  {
+    "slug": "aws-codepipeline-build-cicd-blog-3",
+    "title": "A Blog CI/CD Pipeline with AWS and GitHub — Part 3: CloudFront and Lambda",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2020-04-10",
+    "originalPublished": "2020-04-10 15:15:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Connect a custom domain to CloudFront and S3, and use Lambda@Edge to support nested directory index pages.",
+    "excerpt": [
+      "Once CodePipeline and CodeBuild are connected, a new commit can trigger a build and place the generated files in S3. There are still several pieces needed for a comfortable browsing experience: a domain name, HTTPS, delivery through CloudFront, and working directory-style links.",
+      "This part explains the original S3 and CloudFront setup, including the small Lambda@Edge function used to rewrite requests for nested index pages."
+    ],
+    "editorNote": "Originally published 2020-04-10. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/WO6pkKv.png"
+  },
+  {
+    "slug": "aws-codepipeline-build-cicd-blog-2",
+    "title": "A Blog CI/CD Pipeline with AWS and GitHub — Part 2: Buildspec",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2020-04-09",
+    "originalPublished": "2020-04-09 15:15:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Write a CodeBuild buildspec with installation and build phases, artifact selection, naming, and directory preservation.",
+    "excerpt": [
+      "With CodePipeline configured, the source retrieved from GitHub appears in the artifact bucket as a ZIP archive. The next step is to tell CodeBuild how to turn that source into the website. Those instructions belong in buildspec.yml.",
+      "A buildspec describes the commands used to build and test a project, much like a Jenkins Pipeline script. CodeBuild normally looks for buildspec.yml in the source root:"
+    ],
+    "editorNote": "Originally published 2020-04-09. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/WO6pkKv.png"
+  },
+  {
+    "slug": "aws-codepipeline-build-cicd-blog-1",
+    "title": "A Blog CI/CD Pipeline with AWS and GitHub — Part 1",
+    "topic": "devops",
+    "category": "DEVOPS",
+    "date": "2020-04-08",
+    "originalPublished": "2020-04-08 15:15:00",
+    "modifiedDate": "2026-10-18",
+    "reading": "5 min",
+    "description": "Connect GitHub, CodePipeline, CodeBuild, and S3, and resolve the artifact-bucket permissions needed by the build.",
+    "excerpt": [
+      "After working with CI/CD, I came across AWS CodePipeline and had a simple idea: when I commit a new article to GitHub, why not let the site rebuild and publish itself? Hosting the generated files on S3 would also remove the need to maintain a VPS.",
+      "That small idea eventually grew into a pipeline involving CodePipeline, CodeBuild, S3, Route 53, CloudFront, Lambda, and IAM. This first part explains how the pipeline fits together, how to create it, and why its service roles need access to the artifact bucket."
+    ],
+    "editorNote": "Originally published 2020-04-08. Edited for English and privacy on 18 October 2026; version-specific examples describe the original environment.",
+    "thumbnail": "/images/archive/WO6pkKv.png"
+  }
+]

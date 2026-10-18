@@ -1,0 +1,11 @@
+---
+import Base from './Base.astro';
+import BlogShell from '../components/BlogShell.astro';
+import { articles, site, topics, formatDate } from '../data/site';
+const { frontmatter } = Astro.props;
+const article = articles.find(article => article.slug === frontmatter.slug)!;
+const schema = { '@type': 'BlogPosting', headline: article.title, description: article.description,
+  image: `${site.url}${article.thumbnail}`, datePublished: article.date, dateModified: article.modifiedDate, author: { '@id': `${site.url}/#person` },
+  mainEntityOfPage: `${site.url}/writing/${article.slug}/`, inLanguage: 'en' };
+---
+<Base title={article.title} description={article.description} schema={schema}><BlogShell sections={frontmatter.sections}><article class="card reading-card"><header class="reading-header"><a class="article-thumbnail" href={article.thumbnail} aria-label="View original article cover"><img src={article.thumbnail} alt="" width="100" height="100" /></a><div class="post-meta"><time datetime={article.date} title={`Original publication timestamp: ${article.originalPublished}`}>{formatDate(article.date)}</time><span aria-hidden="true">·</span><a href={`/categories/${article.topic}/`}>{topics.find(t => t.slug === article.topic)?.name}</a><span aria-hidden="true">·</span><span>{article.reading} read</span></div><h1>{article.title}</h1><p class="article-summary">{article.description}</p><div class="article-revision"><a class="author-byline" href="/about/">By Wei-Yu Chen</a><span>Edited <time datetime={article.modifiedDate}>{formatDate(article.modifiedDate)}</time></span></div></header><div class="archive-note">{article.editorNote}</div><div class="prose"><details class="article-toc"><summary>In this article</summary><ol>{frontmatter.sections.map((section: string[]) => <li><a href={`#${section[0]}`}>{section[1]}</a></li>)}</ol></details><slot /><div class="article-end"><p>Thanks for reading. Have a question or a different perspective?</p><a href="/rss.xml">Follow via RSS →</a></div><a class="back-link" href="/">← Back to all posts</a></div></article></BlogShell></Base>

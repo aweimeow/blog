@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogShell from '../../components/BlogShell.astro';
+import PostCard from '../../components/PostCard.astro';
+import { articles, topics } from '../../data/site';
+export function getStaticPaths() { return topics.map(topic => ({ params: { topic: topic.slug }, props: { topic } })); }
+const { topic } = Astro.props;
+const posts = articles.filter(article => article.topic === topic.slug);
+---
+<Base title={topic.name}><BlogShell><div class="card listing-heading"><a class="breadcrumb-link" href="/categories/">Topics /</a><h1>{topic.name}</h1><p>{posts.length} {posts.length === 1 ? 'article' : 'articles'}</p></div>{posts.map(article => <PostCard article={article} />)}</BlogShell></Base>

@@ -1,0 +1,10 @@
+---
+import { topics, formatDate } from '../data/site';
+const { article } = Astro.props;
+---
+<article class="card post-card">
+  <div class="post-meta"><time datetime={article.date}>{formatDate(article.date)}</time><span aria-hidden="true">·</span><a href={`/categories/${article.topic}/`}>{topics.find(t => t.slug === article.topic)?.name}</a><span aria-hidden="true">·</span><span>{article.reading} read</span></div>
+  <h2><a href={`/writing/${article.slug}/`}>{article.title}</a></h2>
+  <div class="post-excerpt">{article.excerpt.map((paragraph: string) => <p>{paragraph}</p>)}</div>
+  <a class="read-more" href={`/writing/${article.slug}/`}>Continue reading <span aria-hidden="true">→</span></a>
+</article>
